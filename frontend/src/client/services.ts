@@ -2,7 +2,7 @@ import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
 
-import type { Body_login_login_access_token,Message,NewPassword,Token,UserPublic,UpdatePassword,UserCreate,UserRegister,UsersPublic,UserUpdate,UserUpdateMe,ItemCreate,ItemPublic,ItemsPublic,ItemUpdate } from './models';
+import type {  StockCreate, StockPublic, StocksPublic, StockUpdate, Body_login_login_access_token,Message,NewPassword,Token,UserPublic,UpdatePassword,UserCreate,UserRegister,UsersPublic,UserUpdate,UserUpdateMe,ItemCreate,ItemPublic,ItemsPublic,ItemUpdate } from './models';
 
 export type TDataLoginAccessToken = {
                 formData: Body_login_login_access_token
@@ -520,5 +520,114 @@ id,
 			},
 		});
 	}
+
+}
+
+export type TDataCreateStock = {
+    requestBody: StockCreate;
+};
+
+export type TDataReadStock = {
+    id: number;
+};
+
+export type TDataUpdateStock = {
+    id: number;
+    requestBody: StockUpdate;
+};
+
+export type TDataDeleteStock = {
+    id: number;
+};
+
+export class StocksService {
+
+    /**
+     * Read Stocks
+     * Retrieve stocks.
+     * @returns StocksPublic Successful Response
+     * @throws ApiError
+     */
+    public static readStocks(data: { limit?: number; skip?: number } = {}): CancelablePromise<StocksPublic> {
+        const { limit = 100, skip = 0 } = data;
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/stocks/',
+            query: {
+                skip, limit
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
+    /**
+     * Create Stock
+     * Create new stock.
+     * @returns StockPublic Successful Response
+     * @throws ApiError
+     */
+    public static createStock(data: TDataCreateStock): CancelablePromise<StockPublic> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/stocks/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
+    /**
+     * Read Stock
+     * Get stock by ID.
+     * @returns StockPublic Successful Response
+     * @throws ApiError
+     */
+    public static readStock(data: TDataReadStock): CancelablePromise<StockPublic> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: `/api/v1/stocks/${data.id}`,
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
+    /**
+     * Update Stock
+     * Update a stock.
+     * @returns StockPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateStock(data: TDataUpdateStock): CancelablePromise<StockPublic> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: `/api/v1/stocks/${data.id}`,
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
+    /**
+     * Delete Stock
+     * Delete a stock.
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteStock(data: TDataDeleteStock): CancelablePromise<Message> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: `/api/v1/stocks/${data.id}`,
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
 
 }

@@ -1,8 +1,9 @@
-import typing as t
+from typing import Any
+
 from sqlmodel import Session, select
 
 from app.core.security import get_password_hash, verify_password
-from app.models import Item, ItemCreate, User, UserCreate, UserUpdate, Stock, StockCreate, StockUpdate, StockPublic
+from app.models import Item, ItemCreate, User, UserCreate, UserUpdate
 
 
 def create_user(*, session: Session, user_create: UserCreate) -> User:
@@ -15,7 +16,7 @@ def create_user(*, session: Session, user_create: UserCreate) -> User:
     return db_obj
 
 
-def update_user(*, session: Session, db_user: User, user_in: UserUpdate) -> t.Any:
+def update_user(*, session: Session, db_user: User, user_in: UserUpdate) -> Any:
     user_data = user_in.model_dump(exclude_unset=True)
     extra_data = {}
     if "password" in user_data:
@@ -50,25 +51,3 @@ def create_item(*, session: Session, item_in: ItemCreate, owner_id: int) -> Item
     session.commit()
     session.refresh(db_item)
     return db_item
-
-
-def create_stock(*, session: Session, stock_in: StockCreate) -> Stock:
-    stock = Stock(**stock_in.dict())
-    session.add(stock)
-    session.commit()
-    session.refresh(stock)
-    return stock
-
-def update_stock(*, session: Session, db_stock: Stock, stock_in: StockUpdate) -> Stock:
-    stock_data = stock_in.dict(exclude_unset=True)
-    for key, value in stock_data.items():
-        setattr(db_stock, key, value)
-    session.add(db_stock)
-    session.commit()
-    session.refresh(db_stock)
-    return db_stock
-
-def get_stock_by_symbol(*, session: Session, symbol: str) -> t.Optional[Stock]:
-    statement = select(Stock).where(Stock.symbol == symbol)
-    result = session.exec(statement).first()
-    return result

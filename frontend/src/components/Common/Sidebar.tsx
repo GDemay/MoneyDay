@@ -104,7 +104,7 @@ const Sidebar = () => {
               p={2}
               maxW="180px"
             >
-              Logged fdfdsin as: {currentUser.email}
+              Logged in as: {currentUser.email}
             </Text>
           )}
         </Flex>

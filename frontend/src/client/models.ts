@@ -130,34 +130,3 @@ export type ValidationError = {
 	type: string;
 };
 
-
-
-export type StockCreate = {
-    symbol: string;
-    quantity: number;
-    purchase_price: number;
-    current_price?: number;
-    purchase_date: string; // using string type for dates in JSON
-};
-
-export type StockPublic = {
-    symbol: string;
-    quantity: number;
-    purchase_price: number;
-    current_price?: number;
-    purchase_date: string;
-    id: number;
-};
-
-export type StockUpdate = {
-    symbol?: string | null;
-    quantity?: number;
-    purchase_price?: number;
-    current_price?: number;
-    purchase_date?: string;
-};
-
-export type StocksPublic = {
-    data: Array<StockPublic>;
-    count: number;
-};

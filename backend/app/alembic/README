@@ -1,5 +1,1 @@
 Generic single-database configuration.
-
-
-alembic revision -m "Adding stock fields"
-alembic upgrade head

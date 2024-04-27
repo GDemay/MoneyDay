@@ -49,15 +49,23 @@ const ActionsMenu = ({ type, value, disabled }: ActionsMenuProps) => {
             Delete {type}
           </MenuItem>
         </MenuList>
-        {type === "User" ? (
+        {type === "User" && (
           <EditUser
             user={value as UserPublic}
             isOpen={editUserModal.isOpen}
             onClose={editUserModal.onClose}
           />
-        ) : (
+        )}
+        {type === "Item" && (
           <EditItem
             item={value as ItemPublic}
+            isOpen={editUserModal.isOpen}
+            onClose={editUserModal.onClose}
+          />
+        )}
+        {type === "Stock" && (
+          <EditStock
+            stock={value as StockPublic}
             isOpen={editUserModal.isOpen}
             onClose={editUserModal.onClose}
           />

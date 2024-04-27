@@ -16,15 +16,15 @@ import {
   } from "@chakra-ui/react";
   import { useMutation, useQueryClient } from "@tanstack/react-query";
   import { type SubmitHandler, useForm } from "react-hook-form";
-  
+
   import { type ApiError, type StockCreate, StocksService } from "../../client";
   import useCustomToast from "../../hooks/useCustomToast";
-  
+
   interface AddStockProps {
     isOpen: boolean;
     onClose: () => void;
   }
-  
+
   const AddStock = ({ isOpen, onClose }: AddStockProps) => {
     const queryClient = useQueryClient();
     const showToast = useCustomToast();
@@ -44,7 +44,7 @@ import {
         purchase_date: new Date().toISOString().substring(0, 10), // Assuming date as string
       },
     });
-  
+
     const mutation = useMutation({
       mutationFn: (data: StockCreate) =>
         StocksService.createStock({ requestBody: data }),
@@ -61,11 +61,11 @@ import {
         queryClient.invalidateQueries({ queryKey: ["stocks"] });
       },
     });
-  
+
     const onSubmit: SubmitHandler<StockCreate> = (data) => {
       mutation.mutate(data);
     };
-  
+
     return (
       <>
         <Modal
@@ -92,7 +92,7 @@ import {
                   <FormErrorMessage>{errors.symbol.message}</FormErrorMessage>
                 )}
               </FormControl>
-  
+
               <FormControl mt={4} isRequired isInvalid={!!errors.quantity}>
                 <FormLabel htmlFor="quantity">Quantity</FormLabel>
                 <NumberInput min={1}>
@@ -108,7 +108,7 @@ import {
                   <FormErrorMessage>{errors.quantity.message}</FormErrorMessage>
                 )}
               </FormControl>
-  
+
               <FormControl mt={4} isRequired isInvalid={!!errors.purchase_price}>
                 <FormLabel htmlFor="purchase_price">Purchase Price</FormLabel>
                 <NumberInput step={0.01}>
@@ -124,7 +124,7 @@ import {
                   <FormErrorMessage>{errors.purchase_price.message}</FormErrorMessage>
                 )}
               </FormControl>
-  
+
               <FormControl mt={4}>
                 <FormLabel htmlFor="current_price">Current Price</FormLabel>
                 <NumberInput step={0.01}>
@@ -136,7 +136,7 @@ import {
                   />
                 </NumberInput>
               </FormControl>
-  
+
               <FormControl mt={4} isRequired isInvalid={!!errors.purchase_date}>
                 <FormLabel htmlFor="purchase_date">Purchase Date</FormLabel>
                 <Input
@@ -151,7 +151,7 @@ import {
                 )}
               </FormControl>
             </ModalBody>
-  
+
             <ModalFooter gap={3}>
               <Button variant="primary" type="submit" isLoading={isSubmitting}>
                 Save
@@ -163,6 +163,5 @@ import {
       </>
     );
   };
-  
+
   export default AddStock;
-  

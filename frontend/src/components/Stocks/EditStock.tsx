@@ -16,7 +16,7 @@ import {
   } from "@chakra-ui/react";
   import { useMutation, useQueryClient } from "@tanstack/react-query";
   import { type SubmitHandler, useForm } from "react-hook-form";
-  
+
   import {
     type ApiError,
     type StockPublic,
@@ -24,13 +24,13 @@ import {
     StocksService,
   } from "../../client";
   import useCustomToast from "../../hooks/useCustomToast";
-  
+
   interface EditStockProps {
     stock: StockPublic;
     isOpen: boolean;
     onClose: () => void;
   }
-  
+
   const EditStock = ({ stock, isOpen, onClose }: EditStockProps) => {
     const queryClient = useQueryClient();
     const showToast = useCustomToast();
@@ -44,7 +44,7 @@ import {
       criteriaMode: "all",
       defaultValues: stock,
     });
-  
+
     const mutation = useMutation({
       mutationFn: (data: StockUpdate) =>
         StocksService.updateStock({ id: stock.id, requestBody: data }),
@@ -60,16 +60,16 @@ import {
         queryClient.invalidateQueries({ queryKey: ["stocks"] });
       },
     });
-  
+
     const onSubmit: SubmitHandler<StockUpdate> = async (data) => {
       mutation.mutate(data);
     };
-  
+
     const onCancel = () => {
       reset();
       onClose();
     };
-  
+
     return (
       <>
         <Modal
@@ -168,6 +168,5 @@ import {
       </>
     );
   };
-  
+
   export default EditStock;
-  

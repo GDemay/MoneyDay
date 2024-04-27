@@ -1,6 +1,7 @@
-from sqlmodel import Field, Relationship, SQLModel
-import typing as t
 from datetime import date
+
+from sqlmodel import Field, Relationship, SQLModel
+
 
 # Shared properties
 # TODO replace email str with EmailStr when sqlmodel supports it
@@ -119,28 +120,33 @@ class StockBase(SQLModel):
     symbol: str = Field(index=True, nullable=False)
     quantity: int = Field(nullable=False)
     purchase_price: float = Field(nullable=False)
-    current_price: t.Optional[float] = None
+    current_price: float | None = None
     purchase_date: date = Field(nullable=False)
+
 
 # Properties to receive on stock creation
 class StockCreate(StockBase):
     pass
 
+
 # Properties to receive on stock update
 class StockUpdate(SQLModel):
-    quantity: t.Optional[int] = None
-    purchase_price: t.Optional[float] = None
-    current_price: t.Optional[float] = None
-    purchase_date: t.Optional[date] = None
+    quantity: int | None = None
+    purchase_price: float | None = None
+    current_price: float | None = None
+    purchase_date: date | None = None
+
 
 # Database model, database table inferred from class name
 class Stock(StockBase, table=True):
-    id: t.Optional[int] = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
+
 
 # Properties to return via API, id is always required
 class StockPublic(StockBase):
     id: int
 
+
 class StocksPublic(SQLModel):
-    data: t.List[StockPublic]
+    data: list[StockPublic]
     count: int

@@ -1,8 +1,18 @@
 import typing as t
+
 from sqlmodel import Session, select
 
 from app.core.security import get_password_hash, verify_password
-from app.models import Item, ItemCreate, User, UserCreate, UserUpdate, Stock, StockCreate, StockUpdate, StockPublic
+from app.models import (
+    Item,
+    ItemCreate,
+    Stock,
+    StockCreate,
+    StockUpdate,
+    User,
+    UserCreate,
+    UserUpdate,
+)
 
 
 def create_user(*, session: Session, user_create: UserCreate) -> User:
@@ -59,6 +69,7 @@ def create_stock(*, session: Session, stock_in: StockCreate) -> Stock:
     session.refresh(stock)
     return stock
 
+
 def update_stock(*, session: Session, db_stock: Stock, stock_in: StockUpdate) -> Stock:
     stock_data = stock_in.dict(exclude_unset=True)
     for key, value in stock_data.items():
@@ -68,7 +79,8 @@ def update_stock(*, session: Session, db_stock: Stock, stock_in: StockUpdate) ->
     session.refresh(db_stock)
     return db_stock
 
-def get_stock_by_symbol(*, session: Session, symbol: str) -> t.Optional[Stock]:
+
+def get_stock_by_symbol(*, session: Session, symbol: str) -> Stock | None:
     statement = select(Stock).where(Stock.symbol == symbol)
     result = session.exec(statement).first()
     return result

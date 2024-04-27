@@ -1,10 +1,20 @@
+import typing as t
+
 from fastapi import APIRouter, HTTPException
 from sqlmodel import func, select
 
 from app.api.deps import CurrentUser, SessionDep
-from app.models import Stock, StockCreate, StockPublic, StocksPublic, StockUpdate, Message
-import typing as t
+from app.models import (
+    Message,
+    Stock,
+    StockCreate,
+    StockPublic,
+    StocksPublic,
+    StockUpdate,
+)
+
 router = APIRouter()
+
 
 @router.get("/", response_model=StocksPublic)
 def read_stocks(
@@ -23,8 +33,9 @@ def read_stocks(
 
     return StocksPublic(data=stocks, count=count)
 
+
 @router.get("/{id}", response_model=StockPublic)
-def read_stock(session: SessionDep, current_user: CurrentUser, id: int) -> t.Any:
+def read_stock(session: SessionDep, id: int) -> t.Any:
     """
     Get stock by ID.
     """
@@ -33,10 +44,9 @@ def read_stock(session: SessionDep, current_user: CurrentUser, id: int) -> t.Any
         raise HTTPException(status_code=404, detail="Stock not found")
     return stock
 
+
 @router.post("/", response_model=StockPublic)
-def create_stock(
-    *, session: SessionDep, item_in: StockCreate
-) -> t.Any:
+def create_stock(*, session: SessionDep, item_in: StockCreate) -> t.Any:
     """
     Create new stock.
     """
@@ -46,10 +56,9 @@ def create_stock(
     session.refresh(stock)
     return stock
 
+
 @router.put("/{id}", response_model=StockPublic)
-def update_stock(
-    *, session: SessionDep, id: int, stock_in: StockUpdate
-) -> t.Any:
+def update_stock(*, session: SessionDep, id: int, stock_in: StockUpdate) -> t.Any:
     """
     Update a stock.
     """
@@ -63,6 +72,7 @@ def update_stock(
     session.commit()
     session.refresh(stock)
     return stock
+
 
 @router.delete("/{id}")
 def delete_stock(session: SessionDep, id: int) -> Message:

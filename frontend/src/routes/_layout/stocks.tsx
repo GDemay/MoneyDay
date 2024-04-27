@@ -1,6 +1,5 @@
 import {
   Container,
-  Flex,
   Heading,
   Skeleton,
   Table,

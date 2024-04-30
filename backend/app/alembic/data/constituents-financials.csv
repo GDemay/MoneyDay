@@ -148,7 +148,7 @@ DLR,Digital Realty Trust Inc,Real Estate,98.96,16.55,3.5710857,2.19,127.23,101.1
 DFS,Discover Financial Services,Financials,72.4,12.13,1.8269607,5.41,81.93,57.5,27433540000,0,2.3610325,2.52,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=DFS
 DISCA,Discovery Communications-A,Consumer Discretionary,22.87,11,0,1.96,30.25,15.99,8763756733,2100000000,1.804088,1.5,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=DISCA
 DISCK,Discovery Communications-C,Consumer Discretionary,21.58,10.37,0,1.96,29.18,14.99,8320262123,2100000000,1.7147918,1.43,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=DISCK
-DISH,Dish Network,Consumer Discretionary,43.77,16.09,0,3.06,66.5,42.48,21032719056,2754331000,1.8521843,3.76,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=DISH
+DISH,Dish Network,Consumer Discretionary,43.77,16.09,0,3.06,66.5,42.48,21032719056,2754321000,1.8521843,3.76,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=DISH
 DG,Dollar General,Consumer Discretionary,95.1,21.18,1.0625255,4.43,105.82,65.97,26580644874,2457604000,1.5283886,4.53,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=DG
 DLTR,Dollar Tree,Consumer Discretionary,101.58,26.66,0,3.77,116.65,65.63,25151198417,2430300000,1.6097589,4.08,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=DLTR
 D,Dominion Energy,Utilities,73.31,20.42,4.5281997,4.91,85.3,71.59,47543571860,6428000000,3.7954214,2.96,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=D
@@ -263,7 +263,7 @@ SJM,JM Smucker,Consumer Staples,118.37,15.35,2.6036885,5.1,143.68,99.565,1361239
 JNJ,Johnson & Johnson,Health Care,126.36,17.31,2.5566885,0.39,148.32,113.15,353062464971,22430000000,4.6326222,4.74,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=JNJ
 JCI,Johnson Controls International,Industrials,36.55,14,2.7659574,1.71,44.37,34.51,34822224800,4295000000,1.1415336,1.69,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=JCI
 JPM,JPMorgan Chase & Co.,Financials,107.88,15.43,1.9845841,6.3,117.3529,81.635,386613611000,0,3.3714993,1.6,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=JPM
-JNPR,Juniper Networks,Information Technology,24.66,14.09,1.5754234,0.78,30.96,23.87,9267350000,1115500000,1.8543326,1.78,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=JNPR
+JNPR,Juniper Networks,Information Technology,24.66,14.09,1.5754234,0.78,30.96,23.87,9267350000,1115500000,1.8543226,1.78,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=JNPR
 KSU,Kansas City Southern,Industrials,103.53,19.8,1.3445379,9.16,114.85,81.54,11037040988,1295400000,4.281897,2.39,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=KSU
 K,Kellogg Co.,Consumer Staples,65.98,16.5,3.363962,1.95,76.69,58.76,22182794875,1827000000,2.3173764,11.5,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=K
 KEY,KeyCorp,Financials,20.08,14.66,1.9876952,1.12,22.22,16.28,22589744920,0,3.270451,1.55,http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=KEY

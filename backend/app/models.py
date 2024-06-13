@@ -1,5 +1,6 @@
 from datetime import date
 
+from pydantic import BaseModel
 from sqlmodel import Field, Relationship, SQLModel
 
 
@@ -150,3 +151,13 @@ class StockPublic(StockBase):
 class StocksPublic(SQLModel):
     data: list[StockPublic]
     count: int
+
+
+class WealthData(BaseModel):
+    date: date
+    total_wealth: float
+
+
+class WealthDataResponse(BaseModel):
+    wealth_data: WealthData
+    stocks_data: list[StockPublic]

@@ -1,5 +1,7 @@
 import typing as t
+from datetime import date
 
+import yfinance as yf
 from fastapi import APIRouter, HTTPException
 from sqlmodel import func, select
 
@@ -11,9 +13,48 @@ from app.models import (
     StockPublic,
     StocksPublic,
     StockUpdate,
+    WealthData,
+    WealthDataResponse,
 )
 
 router = APIRouter()
+
+
+@router.get("/wealth", response_model=WealthDataResponse)
+def compute_wealth(session: SessionDep) -> WealthDataResponse:
+    """
+    Compute the total wealth based on the user's stock holdings.
+    """
+    # Get all the stocks
+    stocks = session.exec(select(Stock)).all()
+
+    # Convert Stock objects to StockPublic objects
+    stocks_data = [StockPublic.model_validate(stock) for stock in stocks]
+
+    # Fetch current prices for each stock from Yahoo Finance API
+    for stock in stocks:
+        stock_data = yf.Ticker(stock.symbol)
+        if not stock_data.history(period="1d").empty:
+            current_price = stock_data.history(period="1d").iloc[-1]["Close"]
+            stock.current_price = current_price
+        else:
+            print(f"No data available for stock: {stock.symbol}")
+
+    # Convert Stock objects to StockPublic objects
+    stocks_data = [StockPublic.model_validate(stock) for stock in stocks]
+
+    # Compute the total wealth by summing the current value of each stock
+    total_wealth = sum(
+        stock.quantity * stock.current_price
+        for stock in stocks
+        if stock.current_price is not None
+    )
+
+    # Create a new wealth data object with the current date and total wealth
+    wealth_data = WealthData(date=date.today(), total_wealth=total_wealth)
+
+    # Return the wealth data along with the list of stocks
+    return WealthDataResponse(wealth_data=wealth_data, stocks_data=stocks_data)
 
 
 @router.get("/", response_model=StocksPublic)
@@ -48,9 +89,28 @@ def read_stock(session: SessionDep, id: int) -> t.Any:
 @router.post("/", response_model=StockPublic)
 def create_stock(*, session: SessionDep, item_in: StockCreate) -> t.Any:
     """
-    Create new stock.
+    Create a new stock entry in the database.
+
+    :param session: Database session dependency
+    :param item_in: Serialized StockCreate object with stock details
+    :return: The newly created Stock object
     """
+    if item_in.quantity <= 0:
+        raise HTTPException(status_code=400, detail="Quantity must be greater than 0")
+
+    stock_data = yf.Ticker(item_in.symbol)
+    if stock_data.history(period="1d").empty:
+        raise HTTPException(
+            status_code=404, detail=f"Invalid stock symbol: {item_in.symbol}"
+        )
+
     stock = Stock(**item_in.dict())
+
+    # Get the current price of the stock
+    current_price = stock_data.history(period="1d").iloc[-1]["Close"]
+    stock.current_price = current_price
+
+    # Add and commit the new stock to the database
     session.add(stock)
     session.commit()
     session.refresh(stock)
